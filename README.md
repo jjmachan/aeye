@@ -1,7 +1,7 @@
 # A-eye
 
 <p align="center">
-  <img width="500" height="500" src="https://github.com/jjmachan/aeye/blob/master/docs/imgs/A-eye%20Poster.png">
+  <img width="500" height="500" src="https://github.com/jjmachan/aeye/blob/master/docs/imgs/poster.png">
 </p>
 
 Aeye aspires to be an open-source AI-as-a-Service platform for hobbyists and
