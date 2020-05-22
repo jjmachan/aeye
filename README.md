@@ -1,5 +1,7 @@
 # A-eye
 
+[![Documentation Status](https://readthedocs.org/projects/aeye/badge/?version=latest)](https://aeye.readthedocs.io/en/latest/?badge=latest)
+
 <p align="center">
   <img width="500" height="500" src="https://github.com/jjmachan/aeye/blob/master/docs/imgs/poster.png">
 </p>
