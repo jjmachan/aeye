@@ -32,7 +32,10 @@ The module we support are:
 
 1. [Image Captioning](https://github.com/jjmachan/imagecaptioning-aeye) - This generates a description of the image that is passed
    to it. The current implementation is based on the [Show and
-   Tell](https://arxiv.org/abs/1411.4555) paper. 
+   Tell](https://arxiv.org/abs/1411.4555) paper. This can be used to generate a
+   description of the surrounding and is able to give some idea to the user
+   about his/her surroundings. Please refer the Module Repo or the docs for more
+   information.
 
 2. Object Detection *(still developing)* - This generates the bounding boxes for a range of objects
    and is based on the [Single Shot MuiltiBox
@@ -41,6 +44,9 @@ The module we support are:
 3. Facial Recognition *(still developing)* - Helps detect faces and identify people around. Also has
    functionality to manage peoples faces for specific users and add new faces to
    the database. 
+## Usage
+
+## Contributing
 
 ## Sponsorship
 
