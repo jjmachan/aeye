@@ -1,3 +1,10 @@
+"""
+Script to pack the models to be served via BentoML
+
+This script loads and Intialises the various models used to perform
+the services. Then the models are packed and saved to disk. Any of the
+artifacts that are not supported are packed using this script
+"""
 import shutil
 
 from imagecaptioning import ImageCaptioner
