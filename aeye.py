@@ -23,16 +23,21 @@ The following are Endpoint currently provided.
 """
 
 import os
+import json
 
+import numpy as np
+from PIL import Image
 import bentoml
 from bentoml.artifact import PytorchModelArtifact
 from bentoml.handlers import ImageHandler
 
 from imagecaptioning import ImageCaptioner
+from objectDetection import InferencingModel
 
 @bentoml.env(pip_dependencies=['torch', 'torchvision'])
 @bentoml.artifacts([PytorchModelArtifact('imgcap_encoder'),
-                    PytorchModelArtifact('imgcap_decoder')])
+                    PytorchModelArtifact('imgcap_decoder'),
+                    PytorchModelArtifact('objdet_model'),])
 class AeyeService(bentoml.BentoService):
     """
     The different Services provided
@@ -76,3 +81,24 @@ class AeyeService(bentoml.BentoService):
 
         sent = model.gen_caption(img)
         return sent
+    @bentoml.api(ImageHandler)
+    def detection(self, img):
+        img = np.asarray(img)
+        img = Image.fromarray(img)
+        print(type(img))
+
+        model = InferencingModel(artifact=self.artifacts.objdet_model)
+
+        labels, boxes = model(img, min_score=0.2, top_k=200, max_overlap=0.5)
+        print(labels)
+
+        json_obj = dict()
+        output = list()
+        for i in range(len(labels)):
+            json_obj[i] = [labels[i], boxes[i].tolist()]
+            output.append(json_obj)
+
+        print(output)
+        output_json = json.dumps(output)
+        print(output_json)
+        return output_json

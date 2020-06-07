@@ -8,6 +8,7 @@ artifacts that are not supported are packed using this script
 import shutil
 
 from imagecaptioning import ImageCaptioner
+from objectDetection import InferencingModel
 from aeye import AeyeService
 
 ##########
@@ -17,7 +18,7 @@ from aeye import AeyeService
 # ImageCaptioning lib
 imgcap_wordmap = 'artifacts/imgcap_wordmap.json'
 imgcap_checkpoint = 'artifacts/imgcap_checkpoint.pth.tar'
-
+objectdetection_checkpoint = 'artifacts/objdet_checkpoint.pth.tar'
 
 
 
@@ -27,7 +28,7 @@ imgcap_checkpoint = 'artifacts/imgcap_checkpoint.pth.tar'
 
 imgcap_model = ImageCaptioner(word_map_file=imgcap_wordmap,
                               checkpoint=imgcap_checkpoint)
-
+objdet_model = InferencingModel(checkpoint_file=objectdetection_checkpoint)
 
 ##########
 # PACK
@@ -36,6 +37,7 @@ imgcap_model = ImageCaptioner(word_map_file=imgcap_wordmap,
 aeye = AeyeService()
 aeye.pack('imgcap_encoder', imgcap_model.encoder)
 aeye.pack('imgcap_decoder', imgcap_model.decoder)
+aeye.pack('objdet_model', objdet_model.model)
 
 
 
