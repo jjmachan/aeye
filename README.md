@@ -39,9 +39,10 @@ The module we support are:
    about his/her surroundings. Please refer the Module Repo or the docs for more
    information.
 
-2. Object Detection *(still developing)* - This generates the bounding boxes for a range of objects
+2. [Object Detection](https://github.com/jjmachan/objectdetection-aye) - This generates the bounding boxes for a range of objects
    and is based on the [Single Shot MuiltiBox
-   Detector](https://arxiv.org/abs/1512.02325). 
+   Detector](https://arxiv.org/abs/1512.02325). This takes an image and returns the objects that are 
+   in the image and their bounding boxes. 
 
 3. Facial Recognition *(still developing)* - Helps detect faces and identify people around. Also has
    functionality to manage peoples faces for specific users and add new faces to
