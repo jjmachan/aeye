@@ -28,16 +28,20 @@ import json
 import numpy as np
 from PIL import Image
 import bentoml
-from bentoml.artifact import PytorchModelArtifact
+from bentoml.artifact import PytorchModelArtifact, PickleArtifact
 from bentoml.handlers import ImageHandler
 
 from imagecaptioning import ImageCaptioner
 from objectDetection import InferencingModel
+from facedetection import FaceDetection
 
 @bentoml.env(pip_dependencies=['torch', 'torchvision'])
 @bentoml.artifacts([PytorchModelArtifact('imgcap_encoder'),
                     PytorchModelArtifact('imgcap_decoder'),
-                    PytorchModelArtifact('objdet_model'),])
+                    PytorchModelArtifact('objdet_model'),
+                    PytorchModelArtifact('mtcnn'),
+                    PytorchModelArtifact('inception_net'),
+                    PickleArtifact('db')])
 class AeyeService(bentoml.BentoService):
     """
     The different Services provided
@@ -83,6 +87,9 @@ class AeyeService(bentoml.BentoService):
         return sent
     @bentoml.api(ImageHandler)
     def detection(self, img):
+        """
+        The finale test
+        """
         img = np.asarray(img)
         img = Image.fromarray(img)
         print(type(img))
@@ -102,3 +109,18 @@ class AeyeService(bentoml.BentoService):
         output_json = json.dumps(output)
         print(output_json)
         return output_json
+
+    @bentoml.api(ImageHandler)
+    def face_recognition(self, img):
+        """ takes an image and recognises if it is the database
+
+        """
+        img = np.asarray(img)
+        img = Image.fromarray(img)
+
+        facedetect = FaceDetection(mtcnn=self.artifacts.mtcnn,
+                                   inception_net=self.artifacts.inception_net,
+                                   db=self.artifacts.db)
+        name, prob = facedetect.recognise_face(img)
+        return name,prob
+
