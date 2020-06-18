@@ -56,8 +56,8 @@ The module we support are:
    </p>
 
 
-3. [Face Detection and Recognition](https://github.com/jjmachan/facedetection-aeye) - We can both detect and recognise the people in photos using this API. Face detection is implemented using the Multitask Cascaded Convolutional Network
-(MTCNN) which gives very reliable results.
+3. [Face Detection and Recognition](https://github.com/jjmachan/facedetection-aeye) - We can both detect and recognise the people in photos using this API. Face detection is implemented using the [Multitask Cascaded Convolutional Network
+(MTCNN)](https://kpzhang93.github.io/MTCNN_face_detection_alignment/paper/spl.pdf) which gives very reliable results.
 
    <p align="center">
     <img width="700" height="400" src="https://github.com/jjmachan/aeye-demo/blob/master/demo/people_faces_marked.jpg">
@@ -71,16 +71,41 @@ The module we support are:
     <img width="602" height="820" src="https://github.com/jjmachan/aeye-demo/blob/master/demo/disha_face_identified.jpg">
     <p align="center"> As you can see the API has successfully recognised Disha Patani and labeled her. </p>
    </p>
+   
+   More work on this end is required like recognition based on the user and is planned in the upcomming version.
 ## Usage
+
+The quickest way to use the API is our hosted solution. Its hosted on GCP but using the free tier, so reliablitly is 
+an issue. If the project gets some traction we can upgrade to a more stable solution. Head over to `http://35.225.149.37:5000` on your browser to access the Swagger UI of the API. Alternatively if you want to add it 
+to you scripts try the cURL or requests method
+
+#### curl
+```
+  $ curl -X POST http://35.225.149.37:5000/detection -F "image=@path/to/image.jpg"
+```
+
+#### Requests
+```
+import requests
+url = 'http://35.225.149.37:5000/detection'
+data = open('path/to/image.jpg', 'rb')
+r = requests.post(url, data=data)
+print(r.json())
+```
 
 ## Contributing
 
+Contributions would be awesome!
+This is just an experiment so there is a lot of places were improvements are actually required. If you like the idea 
+and would like to contribute sent a mail to jamesjithin97@gmail.com.
 ## Sponsorship
 
 We would like to thank [Future Technologies
 Lab](https://futuretechnologieslab.com/) under
 [KSUM](https://startupmission.kerala.gov.in/) for providing us with the GPU to
 build the prototype. 
+
+I know this sounds cliche but without your support none of this will would have been possible.
 
 
 
