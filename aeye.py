@@ -120,3 +120,19 @@ class AeyeService(bentoml.BentoService):
         name, prob = facedetect.recognise_face(img)
         return name,prob
 
+    @bentoml.api(ImageHandler)
+    def get_faces(self, img):
+        """
+        Returns all the bounding boxes for the faces in the img
+        """
+        img = np.asarray(img)
+        img = Image.fromarray(img)
+
+        facedetect = FaceDetection(mtcnn=self.artifacts.mtcnn,
+                                   inception_net=self.artifacts.inception_net,
+                                   db=self.artifacts.db)
+
+        boxes, probs, _ = facedetect.detect_faces(img)
+        output = json.dumps((boxes.tolist(), probs.tolist()))
+        print(output)
+        return output
