@@ -24,6 +24,7 @@ The following are Endpoint currently provided.
 
 import os
 import json
+from collections import defaultdict
 
 import numpy as np
 from PIL import Image
@@ -92,21 +93,16 @@ class AeyeService(bentoml.BentoService):
         """
         img = np.asarray(img)
         img = Image.fromarray(img)
-        print(type(img))
 
         model = InferencingModel(artifact=self.artifacts.objdet_model)
 
-        labels, boxes = model(img, min_score=0.2, top_k=200, max_overlap=0.5)
-        print(labels)
+        labels, boxes = model(img, min_score=0.4, top_k=200, max_overlap=0.05)
 
-        json_obj = dict()
-        output = list()
+        json_obj = defaultdict(list)
         for i in range(len(labels)):
-            json_obj[i] = [labels[i], boxes[i].tolist()]
-            output.append(json_obj)
+            json_obj[labels[i]].append(boxes[i].tolist())
 
-        print(output)
-        output_json = json.dumps(output)
+        output_json = json.dumps(json_obj)
         print(output_json)
         return output_json
 
