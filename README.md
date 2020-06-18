@@ -52,7 +52,7 @@ The module we support are:
    
    <p align="center">
     <img width="684" height="465" src="https://github.com/jjmachan/aeye-demo/blob/master/demo/livingroom_objects_marked.jpg">
-    <p align="center"> The ojbects in the living room. As you can see there is some small issues with this. </p>
+    <p align="center"> The objects in the living room. As you can see there is some small issues with this. </p>
    </p>
 
 
@@ -92,6 +92,35 @@ data = open('path/to/image.jpg', 'rb')
 r = requests.post(url, data=data)
 print(r.json())
 ```
+But if the service is down please feel free to run it locally. This was build using `PyTorch=1.5` and `bentoml=0.7.7`
+([bentoml](docs.bentoml.org) is used to create the server and serve the trained models). To setup locally follow the steps.
+
+1. Clone the repo to you machine
+
+2. Install all the dependencies
+```
+$ pip install -r requirements.txt
+```
+
+3. Download the pretrained weights and keep it in the `artifacts` folder.
+
+    - [Image Captioning](https://storage.cloud.google.com/aeye-artifacts/imgcap_checkpoint.pth.tar?authuser=1)
+    - [Image Captioning WordMap](https://storage.cloud.google.com/aeye-artifacts/imgcap_wordmap.json?authuser=1)
+    - [Object Detection](https://storage.cloud.google.com/aeye-artifacts/objdet_checkpoint.pth.tar?authuser=1)
+    - [Face Recognition](https://storage.cloud.google.com/aeye-artifacts/vggface2.pt?authuser=1)
+    - [Face Recogniion db](https://storage.cloud.google.com/aeye-artifacts/faces_db.fdb?authuser=1)
+
+4. Run 
+```
+$ python saveToBento.py
+```
+This will pack the dependencies and models into a docker container which is now ready to be hosted on any system.
+
+5. Serve using bentoML.
+```
+$ bentoml serve AeyeService:latest
+```
+This will launch the server and the service is running on your system.
 
 ## Contributing
 
